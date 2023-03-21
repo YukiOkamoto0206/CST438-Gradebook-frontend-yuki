@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import { DataGrid } from '@mui/x-data-grid';
 import { SERVER_URL } from '../constants.js';
+import AddAssignment from './AddAssignment.js';
 
 // NOTE:  for OAuth security, http request must have
 //   credentials: 'include'
@@ -15,7 +16,7 @@ import { SERVER_URL } from '../constants.js';
 class Assignment extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selected: 0, assignments: [] };
+    this.state = { selected: 0, assignments: [], open: false };
   }
 
   componentDidMount() {
@@ -53,6 +54,10 @@ class Assignment extends React.Component {
     this.setState({ selected: event.target.value });
   };
 
+  handleClick = () => {
+    console.log('handleClick');
+    this.setState({ open: true });
+  };
   render() {
     const columns = [
       {
@@ -80,6 +85,7 @@ class Assignment extends React.Component {
     return (
       <div align="left">
         <h4>Assignment(s) ready to grade: </h4>
+        <AddAssignment open={this.state.open} />
         <div style={{ height: 450, width: '100%', align: 'left' }}>
           <DataGrid rows={this.state.assignments} columns={columns} />
         </div>
